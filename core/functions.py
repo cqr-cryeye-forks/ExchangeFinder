@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+import pathlib
 
 import dns.resolver
 import requests
@@ -9,7 +10,8 @@ from .helpers import *
 
 
 warnings.filterwarnings('ignore', message='Unverified HTTPS request')
-
+path_file = pathlib.Path(__file__).parent
+path_to_txt = path_file.joinpath("subdomains.txt")
 
 def get_mx_records_domain(domain):
     mx_records = resolve_MX_records(domain)
@@ -31,7 +33,7 @@ def resolve_MX_records(domain):
 
 def generate_domains(domain):
 
-    f = open("core/subdomains.txt", "r")
+    f = open(path_to_txt, "r")
     data = f.readlines()
     subdomains = ["%s.%s" % (subdomain.strip("\n"), domain) for subdomain in data]
 
